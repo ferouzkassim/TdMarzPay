@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TdmarzPay.Tests", "Tests\Td
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Runner", "Runner\Runner.csproj", "{A08D6E83-B529-4EED-8E28-F0D2B89B5270}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MinimalApiExample", "MinimalApiExample\MinimalApiExample.csproj", "{9666ED04-8DDC-4F7C-B1CD-63E8DE6971D7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{A08D6E83-B529-4EED-8E28-F0D2B89B5270}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A08D6E83-B529-4EED-8E28-F0D2B89B5270}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A08D6E83-B529-4EED-8E28-F0D2B89B5270}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9666ED04-8DDC-4F7C-B1CD-63E8DE6971D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9666ED04-8DDC-4F7C-B1CD-63E8DE6971D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9666ED04-8DDC-4F7C-B1CD-63E8DE6971D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9666ED04-8DDC-4F7C-B1CD-63E8DE6971D7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

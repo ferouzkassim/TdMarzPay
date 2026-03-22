@@ -16,6 +16,7 @@ namespace TdMarzPay
             serviceCollection.AddScoped<ICollectMoney,CollectMoneyService>();
             serviceCollection.AddScoped<ITransactions,Transactions>();
             serviceCollection.AddScoped<ICollectMoney,CollectMoneyService>();
+            serviceCollection.AddScoped<IUtilities,UtilitiesService>();
             return serviceCollection;
         }
 

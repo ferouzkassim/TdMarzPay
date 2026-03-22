@@ -6,24 +6,9 @@ using TdMarzPay.Models.JsonConvertors;
 
 namespace TdMarzPay.Models.Commands;
 
-public class CollectMoney
+public class CollectMoney:BaseCollect
 {
-    
-        /// <summary>
-        ///    Amount to be collected from the user
-        /// </summary>
-        [JsonPropertyName("amount")]
-        [JsonConverter(typeof(ConvertToMoney))]
-        public required decimal Amount { get; set; }
-        /// <summary>
-        /// 
-        /// Phone number of the user from whom money is to be collected airtel or mtn format
-        /// </summary>
-        [JsonPropertyName("phone_number")]
-        [Required(ErrorMessage = "Phone number is required")]
-        [Phone(ErrorMessage = "Invalid phone number format")]
-        public required string PhoneNumber { get; set; }
-
+        
         [JsonPropertyName("country")]
         public string Country { get; set; } = "UG";
         /// <summary>
@@ -31,7 +16,7 @@ public class CollectMoney
         /// </summary>
         [JsonPropertyName("reference")]
         [Required(ErrorMessage = "Reference is required")]
-        public required string Reference { get; set; }
+        public required Guid Reference { get; set; }
 
         [JsonPropertyName("description")]
         public string? Description { get; set; }
@@ -43,12 +28,62 @@ public class CollectMoney
         public Uri? CallbackUrl { get; set; }
         
         public CollectMoney(){}
-       
-        public CollectMoney (decimal amount , string phoneNumber, string reference)
+        
+
+        /// <summary>
+        /// starting point of the fluent syntax, creates a CollectMoney object
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns></returns>
+        public static CollectMoney Collect(decimal amount)
         {
-                Amount = amount;
+               
+                return new CollectMoney()
+                {
+                        Amount =  amount,
+                        Reference = Guid.NewGuid(),
+                        PhoneNumber = "000000",
+                        Country = "UG",
+                        Description = "Collect Money"
+                        
+                };
+        }
+        /// <summary>
+        /// String representation of the phone number to be collected from
+        /// </summary>
+        /// <param name="phoneNumber"></param>
+        /// <returns></returns>
+        public CollectMoney WithPhoneNumber(string phoneNumber)
+        {
                 PhoneNumber = phoneNumber;
+                return this;
+        }
+/// <summary>
+/// 1. Set the reference to a unique value if you have it otherwise will use a random guid
+/// </summary>
+/// <param name="reference"></param>
+/// <returns></returns>
+        public CollectMoney WithReference(Guid reference)
+        {
                 Reference = reference;
+                return this;
+        }
+        public CollectMoney WithDescription(string description)
+        {
+                Description = description;
+                return this;
+        }
+        /// <summary>
+        /// Verifies the CollectMoney object
+        /// </summary>
+        /// <returns></returns>
+        /// <exception cref="ArgumentException"></exception>
+        public CollectMoney Verify()
+        {
+                if(Amount is < 500 or > 10000000) throw new ArgumentException("Out Of Range Amount");
+                if(string.IsNullOrWhiteSpace(PhoneNumber)) throw new ArgumentException("Phone number is required");
+                if(!Guid.TryParse(Reference.ToString(), out var resu)) throw new ArgumentException("Reference is required or malformated");
+                return this;
         }
         /// <summary>
         /// Creates FormUrlEncodedContent from CollectMoney object to be sent as request body
@@ -66,7 +101,7 @@ public class CollectMoney
                         { "amount", collectMoney.Amount.ToString(CultureInfo.CurrentCulture) },
                         { "phone_number", collectMoney.PhoneNumber },
                         { "country", collectMoney.Country },
-                        { "reference", collectMoney.Reference },
+                        { "reference", collectMoney.Reference.ToString() },
                         { "description", collectMoney.Description ?? string.Empty },
                         { "callback_url", collectMoney.CallbackUrl?.ToString() ?? string.Empty }
 

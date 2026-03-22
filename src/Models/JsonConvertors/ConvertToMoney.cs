@@ -13,8 +13,8 @@ namespace TdMarzPay.Models.JsonConvertors;
             {
                 return result;
             }
-
-            throw new JsonException("Invalid amount format");
+            return 0;
+           // throw new JsonException("Invalid amount format");
 
 
         }

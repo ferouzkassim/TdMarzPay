@@ -13,5 +13,5 @@ public interface ICollectMoney
     /// </summary>
     Task<GenericResponse<SuccessResponse>?> InitiateTransaction(CollectMoney collectMoney);
     Task MoneyServices();
-    Task MoneyService(Guid guid);
+    Task<bool> TransactionDetails(Guid guid);
 }

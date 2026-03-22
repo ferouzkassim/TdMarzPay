@@ -15,9 +15,8 @@ public class Transactions(BaseConfiguration configuration):ITransactions
     }
     public async Task<TdMarzTransaction> GetTransaction(Guid transactionId)
     {
-        Console.WriteLine(transactionId.ToString());
        var res = await GetClient().GetStringAsync($"/transactions/{transactionId}");
-       Console.WriteLine(res);
+
        return JsonSerializer.Deserialize<TdMarzTransaction>(res) ?? throw new Exception("Transaction not found");
     }
 }

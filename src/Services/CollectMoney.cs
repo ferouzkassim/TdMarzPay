@@ -1,4 +1,5 @@
 using System.Net.Http.Json;
+using System.Text.Json;
 using TdMarzPay.Interfaces;
 using TdMarzPay.Models.Commands;
 using TdMarzPay.Models.Responses;
@@ -12,7 +13,7 @@ public class CollectMoneyService(BaseConfiguration  config):ICollectMoney
 
     private HttpClient GetClient()
     {
-        return config.CreateInstance();
+        return _baseConfiguration.CreateInstance();
     }
     /// <summary>
     /// Initiates a Collect Money transaction
@@ -36,11 +37,16 @@ public class CollectMoneyService(BaseConfiguration  config):ICollectMoney
     public async Task MoneyServices()
     {
        var response = await GetClient().GetAsync("collect-money/services");
+       var strig = await response.Content.ReadAsStringAsync();
        Console.WriteLine(response);
     }
 
-    public async Task MoneyService(Guid guid)
+    public async Task<bool> TransactionDetails(Guid guid)
     {
         var response = await GetClient().GetAsync($"collect-money/{guid}");
+        var res= await response.Content.ReadAsStringAsync();
+        var root = JsonDocument.Parse(res);
+        var data = root.RootElement.GetProperty("status");
+        return string.Compare(data.GetString(), "success", StringComparison.OrdinalIgnoreCase) == 0;
     }
 }

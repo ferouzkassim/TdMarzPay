@@ -8,4 +8,5 @@ public interface IMarzPay
     ICollectMoney CollectMoney { get; }
     IAccount Account { get; }
     ITransactions Transactions { get; }
+    IUtilities Utilities { get; }
 }

@@ -12,5 +12,6 @@ namespace TdMarzPay.Shared
         public string? ErrorCode { get; set; }
         [JsonPropertyName("errors")]
         public ICollection<string> Errors { get; set; } = [];
+        public bool IsSuccess => Status == "success";
     }
 }

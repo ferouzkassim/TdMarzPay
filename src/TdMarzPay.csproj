@@ -8,9 +8,11 @@
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Description>wearemarz.com  payment Platform implementation in C# .net </Description>
-    <Version>1.0.2</Version>
+    <Version>1.0.13</Version>
     <PackageIcon>logo.png</PackageIcon>
     <PackageLicense>https://opensource.org/license/mit</PackageLicense>
+    <PackageProjectUrl>https://wallet.wearemarz.com/documentation</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ferouzkassim/TdMarzPay</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

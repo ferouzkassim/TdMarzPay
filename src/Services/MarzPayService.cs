@@ -2,12 +2,12 @@ using TdMarzPay.Interfaces;
 
 namespace TdMarzPay.Services;
 
-public class MarzPayService(ICollectMoney collectMoney,IAccount account,ITransactions txns):IMarzPay
+public class MarzPayService(ICollectMoney collectMoney,IAccount account,ITransactions txns,IUtilities utilities):IMarzPay
 {
-    private readonly ICollectMoney _collectMoney= collectMoney;
-    private readonly IAccount _account = account;
-    private readonly ITransactions _transactions = txns;
-    public ICollectMoney CollectMoney =>_collectMoney;
-    public IAccount Account =>_account;
-    public ITransactions Transactions =>_transactions;
+    public ICollectMoney CollectMoney { get; } = collectMoney;
+
+    public IAccount Account { get; } = account;
+
+    public ITransactions Transactions { get; } = txns;
+    public IUtilities Utilities { get; } = utilities;
 }
