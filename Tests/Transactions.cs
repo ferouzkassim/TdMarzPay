@@ -34,11 +34,11 @@ public class Transactions
     public async Task Get_Balance_List()
     {
         var mockITransaction = new Mock<ITransactions>();
-        mockITransaction.Setup(x => x.GetTransaction(Guid.NewGuid())).ReturnsAsync(new TdMarzTransaction());
-        
+        mockITransaction.Setup(x => x.GetTransaction(Guid.NewGuid())).ReturnsAsync(new MarzTransaction());
+
         var balance = _serviceProvider.GetService<ITransactions>();
-        var respo = await balance?.GetTransaction(Guid.NewGuid());
+        var respo = await balance?.GetTransaction(Guid.NewGuid())!;
         Assert.NotNull(respo);
-        Assert.Equal("success", respo.Business);
-    } 
+        Assert.Equal("success", respo.Status);
+    }
 }

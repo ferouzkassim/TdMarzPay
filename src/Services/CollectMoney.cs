@@ -1,9 +1,9 @@
-using System.Net.Http.Json;
 using System.Text.Json;
 using TdMarzPay.Interfaces;
 using TdMarzPay.Models.Commands;
 using TdMarzPay.Models.Responses;
 using TdMarzPay.Shared;
+using TdMarzPay.Shared.MapObjects;
 
 namespace TdMarzPay.Services;
 
@@ -15,6 +15,7 @@ public class CollectMoneyService(BaseConfiguration  config):ICollectMoney
     {
         return _baseConfiguration.CreateInstance();
     }
+
     /// <summary>
     /// Initiates a Collect Money transaction
     /// its upto to you to listen to the webhook or poll for the transaction status using the reference provided
@@ -22,15 +23,21 @@ public class CollectMoneyService(BaseConfiguration  config):ICollectMoney
     /// </summary>
     /// <param name="collectMoney"></param>
     /// <returns></returns>
-    public async Task<GenericResponse<SuccessResponse>?> InitiateTransaction(CollectMoney collectMoney)
+    public async Task<GenericResponse<MarzRepsonse>> InitiateTransaction(MarzCollectMoneyRequest collectMoney)
     {
-        var content = CollectMoney.CollectMoneyForm(collectMoney);
+        var content = MarzCollectMoneyRequest.CollectMoneyForm(collectMoney);
         
      var res =   await GetClient().
                                     PostAsync(
                                         "collect-money",
                                         content);
-     return await res.Content.ReadFromJsonAsync<GenericResponse<SuccessResponse>>();
+     var apiResponse =await res.Content.ReadAsStringAsync();
+     if (res is { IsSuccessStatusCode: false, ReasonPhrase: not null })
+     {
+         return GenericResponse<MarzRepsonse>.Failed(res.StatusCode.ToString(), apiResponse);
+     }
+     return JsonSerializer.Deserialize<GenericResponse<MarzRepsonse>>(apiResponse) ?? 
+            GenericResponse<MarzRepsonse>.Failed("500", "Internal Server Error");
     }
     
 
@@ -47,6 +54,15 @@ public class CollectMoneyService(BaseConfiguration  config):ICollectMoney
         var res= await response.Content.ReadAsStringAsync();
         var root = JsonDocument.Parse(res);
         var data = root.RootElement.GetProperty("status");
+        Console.WriteLine(res);
         return string.Compare(data.GetString(), "success", StringComparison.OrdinalIgnoreCase) == 0;
     }
+
+  
+    public GenericResponse<MarzCallBackResponse> HandleWebhook(MarzPayCallBack callBack)
+    {
+        return callBack.Transaction == null ? GenericResponse<MarzCallBackResponse>.Failed("failed")
+            : GenericResponse<MarzCallBackResponse>.Success(CallBackMap.ToCallBackResponse(callBack));
+    }
+    
 }

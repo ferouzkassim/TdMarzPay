@@ -26,8 +26,11 @@ namespace Runner
         public static async Task Main()
         {
            var provide = GetServices().BuildServiceProvider();
-           var coollectmoney = CollectMoney.Collect(5000)
+           var coollectmoney = MarzCollectMoneyRequest.Collect(5000)
                                            .WithPhoneNumber("+256703988005")
+                                           .WithDescription("Collecting money")
+                                           .WithReference(Guid.Parse("ceb9b642-86fd-4022-8727-2b446556b484"))
+                                           .WithCallbackUrl(new Uri("https://webhook.site/ab6a2792-8b9a-46c7-850b-a9ebfb5310bb"))
                                            .Verify();
            var utility = TdMarzUtility.InitiateUtility("12345678901")
                .WithCableTv();

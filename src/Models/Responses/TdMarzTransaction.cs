@@ -2,24 +2,21 @@ using System.Text.Json.Serialization;
 
 namespace TdMarzPay.Models.Responses;
 
-public class TdMarzTransaction
+public class MarzTransaction
 {
-        [JsonPropertyName("event_type")]
-        public MarzPayEvents EventStatus { get; set; }
-
-        
-        [JsonPropertyName("transaction")]
-        public MarzTransaction Transaction { get; set; }
-
-       
-        [JsonPropertyName("collection")]
-        public Collection Collection { get; set; }
-
-      
-        [JsonPropertyName("business")]
-        public object? Business { get; set; }
-
-      
-        [JsonPropertyName("metadata")]
-        public Metadata Metadata { get; set; }
+    [JsonPropertyName("uuid")]
+    public string? Uuid { get; set; }
+    [JsonPropertyName("amount")]
+    public Amount? Amount { get; set; }
+    [JsonPropertyName("status")]
+    public string? Status { get; set; }
+    [JsonPropertyName("provider")]
+    public string? Provider { get; set; }
+    [JsonPropertyName("reference")]
+    public string? MarzReference { get; set; }
+    [JsonPropertyName("provider_reference")]
+    public string? ProviderTransactionReference { get; set; }
+    [JsonPropertyName("description")]
+    public string? Description { get; set; }
+    
 }

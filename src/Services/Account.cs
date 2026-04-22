@@ -1,6 +1,4 @@
-using System.Net.Http.Json;
 using TdMarzPay.Interfaces;
-using TdMarzPay.Models.Responses;
 using TdMarzPay.Shared;
 
 namespace TdMarzPay.Services;

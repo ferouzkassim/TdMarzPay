@@ -10,7 +10,9 @@ public abstract class BaseCollect
     ///    Amount to be collected from the user
     /// </summary>
     [JsonPropertyName("amount")]
-    [JsonConverter(typeof(ConvertToMoney))]
+    [JsonConverter(typeof(ConvertFromMoney))]
+    [Required(ErrorMessage = "Amount is required")]
+    [Range(500, 10000000, ErrorMessage = "Amount must be between 500 and 10000000")]
     public required decimal Amount { get; set; }
     /// <summary>
     /// 
@@ -19,5 +21,6 @@ public abstract class BaseCollect
     [JsonPropertyName("phone_number")]
     [Required(ErrorMessage = "Phone number is required")]
     [Phone(ErrorMessage = "Invalid phone number format")]
+    [RegularExpression(@"^\+?[0-9]{10,12}$", ErrorMessage = "Invalid phone number format")]
     public required string PhoneNumber { get; set; }
 } 

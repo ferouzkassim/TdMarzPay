@@ -1,16 +1,14 @@
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
-using System.Text.Json;
 using System.Text.Json.Serialization;
-using TdMarzPay.Models.JsonConvertors;
 
 namespace TdMarzPay.Models.Commands;
 
-public class CollectMoney:BaseCollect
+public class MarzCollectMoneyRequest:BaseCollect
 {
         
         [JsonPropertyName("country")]
-        public string Country { get; set; } = "UG";
+        public string Country { get; private set; } = "UG";
         /// <summary>
         /// Reference is the id that you will need to use to monitor the transaction i advice to use a unique reference for each transaction
         /// </summary>
@@ -19,15 +17,15 @@ public class CollectMoney:BaseCollect
         public required Guid Reference { get; set; }
 
         [JsonPropertyName("description")]
-        public string? Description { get; set; }
+        public string? Description { get;private set; }
         /// <summary>
         /// if given this wil override the webhook url in the dashboard if not given the dashboard webhook url will be used
         /// </summary>
 
         [JsonPropertyName("callback_url")]
-        public Uri? CallbackUrl { get; set; }
+        public Uri? CallbackUrl { get;private set; }
         
-        public CollectMoney(){}
+        public MarzCollectMoneyRequest(){}
         
 
         /// <summary>
@@ -35,10 +33,10 @@ public class CollectMoney:BaseCollect
         /// </summary>
         /// <param name="amount"></param>
         /// <returns></returns>
-        public static CollectMoney Collect(decimal amount)
+        public static MarzCollectMoneyRequest Collect(decimal amount)
         {
                
-                return new CollectMoney()
+                return new MarzCollectMoneyRequest()
                 {
                         Amount =  amount,
                         Reference = Guid.NewGuid(),
@@ -53,8 +51,8 @@ public class CollectMoney:BaseCollect
         /// </summary>
         /// <param name="phoneNumber"></param>
         /// <returns></returns>
-        public CollectMoney WithPhoneNumber(string phoneNumber)
-        {
+        public MarzCollectMoneyRequest WithPhoneNumber(string phoneNumber)
+        {       
                 PhoneNumber = phoneNumber;
                 return this;
         }
@@ -63,14 +61,19 @@ public class CollectMoney:BaseCollect
 /// </summary>
 /// <param name="reference"></param>
 /// <returns></returns>
-        public CollectMoney WithReference(Guid reference)
+        public MarzCollectMoneyRequest WithReference(Guid reference)
         {
                 Reference = reference;
                 return this;
         }
-        public CollectMoney WithDescription(string description)
+        public MarzCollectMoneyRequest WithDescription(string description)
         {
                 Description = description;
+                return this;
+        }
+        public MarzCollectMoneyRequest WithCallbackUrl(Uri callbackUrl)
+        {
+                CallbackUrl = callbackUrl;
                 return this;
         }
         /// <summary>
@@ -78,7 +81,7 @@ public class CollectMoney:BaseCollect
         /// </summary>
         /// <returns></returns>
         /// <exception cref="ArgumentException"></exception>
-        public CollectMoney Verify()
+        public MarzCollectMoneyRequest Verify()
         {
                 if(Amount is < 500 or > 10000000) throw new ArgumentException("Out Of Range Amount");
                 if(string.IsNullOrWhiteSpace(PhoneNumber)) throw new ArgumentException("Phone number is required");
@@ -90,7 +93,7 @@ public class CollectMoney:BaseCollect
         /// </summary>
         /// <param name="collectMoney"></param>
         /// <returns></returns>
-        public static  FormUrlEncodedContent CollectMoneyForm(CollectMoney collectMoney)
+        public static  FormUrlEncodedContent CollectMoneyForm(MarzCollectMoneyRequest collectMoney)
         {
                 if(collectMoney.PhoneNumber.StartsWith("0"))
                 { 

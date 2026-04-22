@@ -4,5 +4,5 @@ namespace TdMarzPay.Interfaces;
 
 public interface ITransactions
 {
-    Task<TdMarzTransaction> GetTransaction(Guid refferenceId);
+    Task<MarzTransaction> GetTransaction(Guid refferenceId);
 }

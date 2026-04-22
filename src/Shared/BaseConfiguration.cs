@@ -1,13 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using System;
-using System.Buffers.Text;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Net.Http.Headers;
-using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 using TdMarzPay.Models;
 
 namespace TdMarzPay.Shared

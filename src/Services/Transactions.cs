@@ -1,4 +1,3 @@
-using System.Net.Http.Json;
 using System.Text.Json;
 using TdMarzPay.Interfaces;
 using TdMarzPay.Models.Responses;
@@ -13,10 +12,10 @@ public class Transactions(BaseConfiguration configuration):ITransactions
     {
         return _configuration.CreateInstance();
     }
-    public async Task<TdMarzTransaction> GetTransaction(Guid transactionId)
+    public async Task<MarzTransaction> GetTransaction(Guid transactionId)
     {
        var res = await GetClient().GetStringAsync($"/transactions/{transactionId}");
 
-       return JsonSerializer.Deserialize<TdMarzTransaction>(res) ?? throw new Exception("Transaction not found");
+       return JsonSerializer.Deserialize<MarzTransaction>(res) ?? throw new Exception("Transaction not found");
     }
 }

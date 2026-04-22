@@ -7,12 +7,17 @@
     <ToolCommandName>tdmarzpay</ToolCommandName>
     <PackageOutputPath>./nupkg</PackageOutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Description>wearemarz.com  payment Platform implementation in C# .net </Description>
-    <Version>1.0.13</Version>
+    <Description>wearemarz.com  payment Platform implementation mtnmomo/airtel Uganda 
+in C# .net </Description>
+    <Version>1.0.17</Version>
     <PackageIcon>logo.png</PackageIcon>
     <PackageLicense>https://opensource.org/license/mit</PackageLicense>
     <PackageProjectUrl>https://wallet.wearemarz.com/documentation</PackageProjectUrl>
     <RepositoryUrl>https://github.com/ferouzkassim/TdMarzPay</RepositoryUrl>
+    <PackageReleaseNotes>Bills Payments</PackageReleaseNotes>
+    <PackageTags>mobile money, marzpay ug, mtn uganda, airtel uganda </PackageTags>
+    <LangVersion>14</LangVersion>
+    <Title>MarzPay</Title>
   </PropertyGroup>
 
   <ItemGroup>
